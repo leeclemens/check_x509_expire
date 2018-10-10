@@ -1,4 +1,10 @@
 # check_x509_expire
+
+[![Build Status](https://travis-ci.org/leeclemens/check_x509_expire.svg?branch=master)](https://travis-ci.org/leeclemens/check_x509_expire)
+[![Build Status](https://travis-ci.org/leeclemens/check_x509_expire.svg?branch=develop)](https://travis-ci.org/leeclemens/check_x509_expire)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
+
 Check x509 Certificate Expiration
 
 A basic Nagios/Icinga plugin to check the expiry of an x509 certificate.
