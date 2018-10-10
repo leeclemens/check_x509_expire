@@ -31,6 +31,7 @@ import datetime
 import re
 import subprocess
 import sys
+import traceback
 
 STATUS_OK = 0
 STATUS_WARNING = 1
@@ -218,6 +219,5 @@ if __name__ == '__main__':
     except Exception as ex:
         print('%s: Unhandled exception %s' % (sys.argv[0], type(ex)))
         print(ex)
-        import traceback
         traceback.print_exc()
         sys.exit(STATUS_CRITICAL)
