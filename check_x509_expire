@@ -174,7 +174,7 @@ def exit_with_perf_data(after, cur_time, exit_code, before=None):
         time_remaining_sec = time_remaining.total_seconds()
     else:
         time_remaining_sec = (time_remaining.microseconds + (
-                time_remaining.seconds + time_remaining.days * 24 * 3600) *
+            time_remaining.seconds + time_remaining.days * 24 * 3600) *
                               10 ** 6) / 10 ** 6
     perf_data_days = time_remaining_sec / 60 / 60 / 24
     print('%s - Expires: %s%s | days_remaining=%s' % (
