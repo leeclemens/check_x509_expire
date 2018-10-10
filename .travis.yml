@@ -18,4 +18,6 @@ before_script:
   - cd check_x509_expire
 
 script:
+  - pwd
+  - ls
   - check_x509_expire
