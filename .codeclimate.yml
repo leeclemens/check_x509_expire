@@ -1,0 +1,15 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - python
+  fixme:
+    enabled: true
+    exclude_paths:
+    - pylintrc
+  radon:
+    enabled: true
+ratings:
+  paths:
+  - "check_x509_expire"
