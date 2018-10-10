@@ -1,0 +1,16 @@
+object CheckCommand "x509_expire" {
+  import "plugin-check-command"
+
+  command = [ PluginContribDir + "/check_x509_expire" ]
+
+  arguments = {
+     "-s" = "$x509_expire_server$"
+     "-p" = "$x509_expire_port$"
+     "-w" = "$x509_expire_warning$"
+     "-c" = "$x509_expire_critical$"
+     "-t" = "$x509_expire_starttls$"
+  }
+
+  vars.x509_expire_warning = 14
+  vars.x509_expire_critical = 7
+}
