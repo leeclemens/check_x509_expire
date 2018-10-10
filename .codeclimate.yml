@@ -11,9 +11,6 @@ engines:
     - pylintrc
   radon:
     enabled: true
-ratings:
-  paths:
-  - "check_x509_expire"
 plugins:
   pep8:
     enabled: true
