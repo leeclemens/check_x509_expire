@@ -3,7 +3,7 @@ Check x509 Certificate Expiration
 
 A basic Nagios/Icinga plugin to check the expiry of an x509 certificate.
 
-StartTLS can be used by passing the appropriate protocol. Any protocol supported by your version of OpenSSL should work.
+STARTTLS can be used by passing the appropriate protocol. Any protocol supported by your version of OpenSSL should work.
 
 ## Usage
 
