@@ -14,6 +14,6 @@ STARTTLS can be used by passing the appropriate protocol. Any protocol supported
 1. Fork the repo
   * Create a new feature branch
 2. Make your edits, commit and push
-3. Create a Pull Request
+3. Create a [Pull Request](https://github.com/leeclemens/check_x509_expire/pulls)
 
-Or just create an Issue to report a bug or feature request
+Or just create an [Issue](https://github.com/leeclemens/check_x509_expire/issues) to report a bug or feature request
