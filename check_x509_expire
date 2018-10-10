@@ -186,9 +186,9 @@ def exit_with_perf_data(after, cur_time, exit_code, before=None):
     sys.exit(exit_code)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
-        if len(sys.argv) == 1 or "-h" in sys.argv or "--help" in sys.argv:
+        if len(sys.argv) == 1 or '-h' in sys.argv or '--help' in sys.argv:
             usage()
         else:
             ARGS = parse_args()
