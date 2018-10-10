@@ -132,7 +132,8 @@ def run(server, port, warning, critical, starttls):
     if proc.returncode == 0:
         regex = re.compile(r"^notBefore=(?P<before>(.*))\n"
                            r"notAfter=(?P<after>(.*))\n", re.MULTILINE)
-        match = regex.match(stdout)
+        # TODO: Better py2-3 compatibility (no install, 2to3)
+        match = regex.match(stdout if isinstance(stdout, str) else stdout.decode('utf-8'))
         if match:
             cert_date_format = "%b %d %H:%M:%S %Y %Z"
             before = datetime.datetime.strptime(match.group('before'),
@@ -215,4 +216,6 @@ if __name__ == '__main__':
     except Exception as ex:
         print('%s: Unhandled exception %s' % (sys.argv[0], type(ex)))
         print(ex)
+        import traceback
+        traceback.print_exc()
         sys.exit(STATUS_CRITICAL)
