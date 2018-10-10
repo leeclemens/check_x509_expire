@@ -15,4 +15,4 @@ python:
   - "3.7-dev"
 
 script:
-  - ./check_x509_expire
+  - ./check_x509_expire -s example.com -p 443 -w 28 -c 21
