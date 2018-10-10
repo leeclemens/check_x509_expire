@@ -189,27 +189,28 @@ if __name__ == "__main__":
         if len(sys.argv) == 1 or "-h" in sys.argv or "--help" in sys.argv:
             usage()
         else:
-            args = parse_args()
-            if args['server'] is None:
+            ARGS = parse_args()
+            if ARGS['server'] is None:
                 print('Server must be provided')
                 usage()
-            if args['port'] is None:
+            if ARGS['port'] is None:
                 print('Port must be provided')
                 usage()
-            if args['warning'] is None:
+            if ARGS['warning'] is None:
                 print('Warning days must be provided')
                 usage()
-            if args['critical'] is None:
+            if ARGS['critical'] is None:
                 print('Critical days must be provided')
                 usage()
-            if args['warning'] < args['critical']:
+            if ARGS['warning'] < ARGS['critical']:
                 print('Warning days must be greater than or equal'
                       ' to critical days')
                 usage()
-            run(args['server'], args['port'],
-                args['warning'], args['critical'],
-                args['starttls'])
-    except Exception as e:
-        print('%s: Unhandled exception %s' % (sys.argv[0], type(e)))
-        print(e)
+            run(ARGS['server'], ARGS['port'],
+                ARGS['warning'], ARGS['critical'],
+                ARGS['starttls'])
+    # pylint: disable=broad-except
+    except Exception as ex:
+        print('%s: Unhandled exception %s' % (sys.argv[0], type(ex)))
+        print(ex)
         sys.exit(STATUS_CRITICAL)
