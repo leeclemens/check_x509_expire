@@ -14,5 +14,15 @@ python:
   # - "3.7"
   - "3.7-dev"
 
+before_install:
+  - pip freeze
+  - travis_retry pip install --upgrade pip
+  - travis_retry pip install --upgrade coverage
+  - travis_retry pip install --upgrade coveralls
+  - pip freeze
+
+
+
 script:
+  - pep8 -v check_x509_expire
   - ./check_x509_expire -s example.com -p 443 -w 28 -c 21
