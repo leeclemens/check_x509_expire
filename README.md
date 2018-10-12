@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/leeclemens/check_x509_expire.svg?branch=master)](https://travis-ci.org/leeclemens/check_x509_expire)
 [![Build Status](https://travis-ci.org/leeclemens/check_x509_expire.svg?branch=develop)](https://travis-ci.org/leeclemens/check_x509_expire)
-[![Maintainability](https://api.codeclimate.com/v1/badges/497845d9ee39e8b933cf/maintainability)](https://codeclimate.com/github/leeclemens/check_x509_expire/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/497845d9ee39e8b933cf/test_coverage)](https://codeclimate.com/github/leeclemens/check_x509_expire/test_coverage)
 
 Check x509 Certificate Expiration
 
