@@ -1,8 +1,8 @@
 # check_x509_expire
 
-[![Build Status](https://travis-ci.org/com/leeclemens/check_x509_expire.svg?branch=master)](https://travis-ci.org/leeclemens/check_x509_expire)
-[![Build Status](https://travis-ci.org/com/leeclemens/check_x509_expire.svg?branch=develop)](https://travis-ci.org/leeclemens/check_x509_expire)
-
+[![Master Build Status](https://img.shields.io/travis/com/leeclemens/check_x509_expire/master?label=master)](https://travis-ci.com/leeclemens/check_x509_expire/branches)
+[![Develop Build Status](https://img.shields.io/travis/com/leeclemens/check_x509_expire/develop?label=develop)](https://travis-ci.com/leeclemens/check_x509_expire/branches)
+f
 Check x509 Certificate Expiration
 
 A basic Nagios/Icinga plugin to check the expiry of an x509 certificate.
