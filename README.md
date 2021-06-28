@@ -1,7 +1,7 @@
 # check_x509_expire
 
-[![Build Status](https://travis-ci.org/leeclemens/check_x509_expire.svg?branch=master)](https://travis-ci.org/leeclemens/check_x509_expire)
-[![Build Status](https://travis-ci.org/leeclemens/check_x509_expire.svg?branch=develop)](https://travis-ci.org/leeclemens/check_x509_expire)
+[![Build Status](https://travis-ci.org/leeclemens/com/check_x509_expire.svg?branch=master)](https://travis-ci.org/leeclemens/check_x509_expire)
+[![Build Status](https://travis-ci.org/leeclemens/com/check_x509_expire.svg?branch=develop)](https://travis-ci.org/leeclemens/check_x509_expire)
 
 Check x509 Certificate Expiration
 
