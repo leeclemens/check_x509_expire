@@ -30,6 +30,7 @@ from __future__ import print_function
 import argparse
 import datetime
 import re
+import shlex
 import subprocess
 import sys
 import traceback
@@ -50,46 +51,58 @@ PREFIXES = {
 def run(args):
     """Main run function to execute this check
     """
-    # Enhance: Use shlex and python pipes
-    openssl_cmd = (
-        'echo'
-        ' | openssl s_client -crlf'
-        ' {}'
-        ' -servername {}'
-        ' -connect {}:{} 2>/dev/null'
-        ' | openssl x509 -noout -dates'.format(
-            '-starttls {}'.format(args.starttls) if args.starttls else '',
-            args.server,
-            args.server,
-            args.port))
-    with subprocess.Popen(openssl_cmd, shell=True,
-                          stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
-        stdout, stderr = proc.communicate()
-        if proc.returncode == 0:
-            regex = re.compile(r"^notBefore=(?P<before>(.*))\n"
-                               r"notAfter=(?P<after>(.*))\n", re.MULTILINE)
-            match = regex.match(stdout
-                                if isinstance(stdout, str)
-                                else stdout.decode('utf-8'))
-            if match:
-                cert_date_format = "%b %d %H:%M:%S %Y %Z"
-                before = datetime.datetime.strptime(match.group('before'),
-                                                    cert_date_format)
-                after = datetime.datetime.strptime(match.group('after'),
-                                                   cert_date_format)
-            else:
-                print(stdout)
-                print('Unexpected number of certificates')
-                sys.exit(STATUS_CRITICAL)
-            assert before is not None
-            assert after is not None
+    command_0_echo = 'echo -n'
+    command_1_openssl_sclient = ('openssl s_client -crlf'
+                                 ' {}'
+                                 ' -servername {}'
+                                 ' -connect {}:{}').format(
+        '-starttls {}'.format(args.starttls) if args.starttls else '',
+        args.server,
+        args.server,
+        args.port)
+    command_2_openssl_x509 = 'openssl x509 -noout -dates'
 
-            cur_time = datetime.datetime.utcnow()
-            process_cert_time(args, before, after, cur_time)
-        else:
-            print('Failed to execute %s %s %s' %
-                  (openssl_cmd, stdout, stderr))
-            sys.exit(STATUS_CRITICAL)
+    with subprocess.Popen(shlex.split(command_0_echo),
+                          stdout=subprocess.PIPE) as proc_0:
+        with subprocess.Popen(shlex.split(command_1_openssl_sclient),
+                              stdin=proc_0.stdout,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.DEVNULL) as proc_1:
+            with subprocess.Popen(shlex.split(command_2_openssl_x509),
+                                  stdin=proc_1.stdout,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE) as proc_2:
+                stdout, stderr = proc_2.communicate()
+                if proc_2.returncode == 0:
+                    regex = re.compile(r"^notBefore=(?P<before>(.*))\n"
+                                       r"notAfter=(?P<after>(.*))\n", re.MULTILINE)
+                    match = regex.match(stdout
+                                        if isinstance(stdout, str)
+                                        else stdout.decode('utf-8'))
+                    if match:
+                        cert_date_format = "%b %d %H:%M:%S %Y %Z"
+                        before = datetime.datetime.strptime(match.group('before'),
+                                                            cert_date_format)
+                        after = datetime.datetime.strptime(match.group('after'),
+                                                           cert_date_format)
+                    else:
+                        print(stdout)
+                        print(stderr)
+                        print('Unexpected number of certificates')
+                        sys.exit(STATUS_CRITICAL)
+                    assert before is not None
+                    assert after is not None
+
+                    cur_time = datetime.datetime.utcnow()
+                    process_cert_time(args, before, after, cur_time)
+                else:
+                    print('Failed to execute %s | %s | %s [%s]' %
+                          (command_0_echo, command_1_openssl_sclient, command_2_openssl_x509,
+                           proc_2.returncode))
+                    sys.exit(STATUS_CRITICAL)
+    print('Unknown failure executing %s | %s | %s' %
+          (command_0_echo, command_1_openssl_sclient, command_2_openssl_x509))
+    sys.exit(STATUS_CRITICAL)
 
 
 def process_cert_time(args, before, after, cur_time):
@@ -137,15 +150,13 @@ def parse_args():
     """Parse command line arguments
     """
     parser = argparse.ArgumentParser(
-        'This plugin checks the Elasticsearch snapshots for either all'
-        ' or a specific repository. It will test the age'
-        ' of any successful snapshot, using the newest in each repository.')
+        'This plugin checks the expiration date of an x509 certificate.')
     parser.add_argument('-s', '--server', type=str,
                         required=True,
                         dest='server',
                         help='server to test')
     parser.add_argument('-p', '--port', type=int,
-                        required=True,
+                        required=False,
                         dest='port',
                         default=443,
                         help='port to connect to')
